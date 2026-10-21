@@ -29,7 +29,5 @@ The map centre is the exact campus point from the school's Google Maps link (Plu
 - Photos are shrunk to about 900 px and stored in the browser, which holds roughly 5 MB in total. The app warns when storage is full.
 - Clearing browser data erases everything.
 
-To share reports across everyone, a server and database are needed. The earlier PHP and MySQL version (`campussafe.zip`) does that.
-
 ## Contacts: verified versus placeholder
-Verified: 911, Philippine Red Cross 143, ISUFST main office (09176246100, (33) 511 5663, president@isufst.edu.ph) and the San Enrique Campus Administrator email (ca_sec@isufst.edu.ph), taken from isufst.edu.ph. All other entries are placeholders with a disabled Call Now button until the school confirms them. To confirm one, add its details in `data.js` and set `verified: true`.
+To confirm one, add its details in `data.js` and set `verified: true`.
