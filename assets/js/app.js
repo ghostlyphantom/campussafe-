@@ -64,7 +64,7 @@ function authView(mode) {
       <span class="beacon" aria-hidden="true"><i></i><i></i><b>${ic('shield')}</b></span>
       <h1>CampusSafe</h1><p class="lead">Emergency incident and response guide for ISUFST San Enrique Campus.</p>
       <ul class="points"><li>${ic('filePlus')} Report an incident in under a minute</li><li>${ic('exit')} Find the nearest evacuation area</li><li>${ic('phone')} Call the right contact with one tap</li></ul>
-      <p class="fine">Sample data only. Contacts, locations and procedures need official school verification before real-world use.</p>
+      <p class="fine">Contacts, locations and procedures are taken from verified channels.</p>
     </section>
     <section class="auth-card" aria-labelledby="t">
       <div class="tabs"><a class="tab ${login ? 'is-active' : ''}" href="#/login">Log in</a><a class="tab ${login ? '' : 'is-active'}" href="#/register">Create account</a></div>
