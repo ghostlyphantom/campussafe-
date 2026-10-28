@@ -159,7 +159,7 @@ const views = {};
 /* ---------- dashboard ---------- */
 views.dashboard = (p, q, u) => {
   const all = S.reports.all(), mine = all.filter(r => r.uid === u.id);
-  const stats = [['My reports', mine.length, 'filePlus', '#/incidents?scope=mine'], ['Open on campus', all.filter(r => r.status !== 'resolved').length, 'alert', '#/incidents?status=reported'], ['Resolved', all.filter(r => r.status === 'resolved').length, 'check', '#/incidents?status=resolved'], ['Map markers', S.markers.all(u.id).length, 'pin', '#/map']];
+  const stats = [['My reports', mine.length, 'filePlus', '#/incidents?scope=mine'], ['Open Saved Reports', all.filter(r => r.status !== 'resolved').length, 'alert', '#/incidents?status=reported'], ['Already Sent Reports', all.filter(r => r.status === 'resolved').length, 'check', '#/incidents?status=resolved'], ['Map markers', S.markers.all(u.id).length, 'pin', '#/map']];
   const cnt = {}; all.forEach(r => cnt[r.category] = (cnt[r.category] || 0) + 1);
   const cats = Object.entries(cnt).sort((a, b) => b[1] - a[1]), max = Math.max(1, ...cats.map(c => c[1]));
   const notes = S.notes.list(u.id).filter(n => n.unread).slice(0, 4);
