@@ -259,7 +259,7 @@ views.incident = (p, q, u) => {
       ${mine && r.status !== 'resolved' ? `<a class="btn btn-primary" href="${esc(reportMail(r))}">${ic('mail')} Send to campus office</a>` : ''}
       ${hasLoc ? `<a class="btn btn-navy" href="#/map?incident=${r.id}">${ic('map')} View on campus map</a><a class="btn btn-ghost" target="_blank" rel="noopener" href="${osm(r.lat, r.lng, 18)}">${ic('external')} OpenStreetMap</a>` : ''}
       ${mine && r.status === 'reported' ? `<a class="btn btn-ghost" href="#/report/${r.id}">${ic('edit')} Edit</a>` : ''}
-      ${mine && r.status !== 'resolved' ? `<button class="btn btn-navy" type="button" data-act="resolve" data-id="${r.id}">${ic('check')} Mark resolved</button>` : ''}
+      ${mine && r.status !== 'reported' ? `<button class="btn btn-navy" type="button" data-act="reported" data-id="${r.id}">${ic('check')} Mark as reported</button>` : ''}
       ${mine && r.status === 'reported' ? `<button class="btn btn-dark" type="button" data-act="delete-report" data-id="${r.id}">${ic('trash')} Delete</button>` : ''}
     </div></article>` };
 };
@@ -503,7 +503,7 @@ document.addEventListener('click', e => {
   else if (a === 'peek') { const i = t.parentElement.querySelector('input'), s = i.type === 'password'; i.type = s ? 'text' : 'password'; t.setAttribute('aria-label', s ? 'Hide password' : 'Show password'); }
   else if (a === 'export' && u) exportCsv(u);
   else if (a === 'mark-read' && u) { S.notes.markAllRead(u.id); toast('All notifications marked as read.'); route(); }
-  else if (a === 'resolve' && u) { try { S.reports.update(t.dataset.id, u.id, { status: 'resolved' }); toast('Marked as resolved.'); route(); } catch (x) { toast(x.message, 'error'); } }
+  else if (a === 'reported' && u) { try { S.reports.update(t.dataset.id, u.id, { status: 'reported' }); toast('Marked as reported.'); route(); } catch (x) { toast(x.message, 'error'); } }
   else if (a === 'delete-report' && u) { if (!confirm('Delete this report? This cannot be undone.')) return; try { S.reports.remove(t.dataset.id, u.id); toast('Report deleted.'); go('incidents?scope=mine'); } catch (x) { toast(x.message, 'error'); } }
 });
 document.addEventListener('submit', e => {
