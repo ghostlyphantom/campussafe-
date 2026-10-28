@@ -237,7 +237,7 @@ async function submitReport(form, u) {
     const x = S.reports.add(Object.assign({ uid: u.id }, r));
     S.notes.add(u.id, 'Report received', `Your report "${r.title}" was saved.`, 'info', '#/incident/' + x.id);
     if (r.severity === 'high' || r.severity === 'critical') S.notes.add(null, D.SEVERITIES[r.severity] + ' incident reported', `${r.title} at ${r.location}. Follow official instructions.`, r.severity === 'critical' ? 'urgent' : 'warning', '#/incident/' + x.id);
-    toast('Report saved. Now press Send to campus office so someone receives it.'); go('incident/' + x.id);
+    toast('Report saved. Now press Send Report to Email so someone receives it.'); go('incident/' + x.id);
   } catch (e) { toast(e.message, 'error'); btn.classList.remove('is-loading'); btn.disabled = false; }
 }
 
@@ -256,10 +256,10 @@ views.incident = (p, q, u) => {
     ${safeImg(r.photo) ? `<h3>Photo</h3><img class="photo" src="${safeImg(r.photo)}" alt="Photo attached to the report">` : ''}
     ${mine && r.status !== 'resolved' ? `<div class="notice send-note">${ic('mail')}<div><b>Send this report to the campus office.</b> It is saved only on this device until you email it. Press the button, then press send in your email app.${r.photo ? ' Attach the photo yourself.' : ''}</div></div>` : ''}
     <div class="detail-actions">
-      ${mine && r.status !== 'resolved' ? `<a class="btn btn-primary" href="${esc(reportMail(r))}">${ic('mail')} Send to campus office</a>` : ''}
+      ${mine && r.status !== 'resolved' ? `<a class="btn btn-primary" href="${esc(reportMail(r))}">${ic('mail')} Send Report to Email</a>` : ''}
       ${hasLoc ? `<a class="btn btn-navy" href="#/map?incident=${r.id}">${ic('map')} View on campus map</a><a class="btn btn-ghost" target="_blank" rel="noopener" href="${osm(r.lat, r.lng, 18)}">${ic('external')} OpenStreetMap</a>` : ''}
       ${mine && r.status === 'reported' ? `<a class="btn btn-ghost" href="#/report/${r.id}">${ic('edit')} Edit</a>` : ''}
-      ${mine && r.status !== 'resolved' ? `<button class="btn btn-navy" type="button" data-act="resolve" data-id="${r.id}">${ic('check')} Mark resolved</button>` : ''}
+      ${mine && r.status !== 'resolved' ? `<button class="btn btn-navy" type="button" data-act="resolve" data-id="${r.id}">${ic('check')} Mark as Report Sent</button>` : ''}
       ${mine && r.status === 'reported' ? `<button class="btn btn-dark" type="button" data-act="delete-report" data-id="${r.id}">${ic('trash')} Delete</button>` : ''}
     </div></article>` };
 };
