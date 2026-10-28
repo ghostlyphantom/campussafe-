@@ -39,7 +39,7 @@ window.CS_DATA = {
     { name:'National Emergency Hotline 911', role:'Police, fire and medical emergencies nationwide', phone:'911', hotline:true, verified:true, note:'Philippine national emergency hotline.' },
     { name:'Philippine Red Cross Hotline', role:'Emergency medical assistance and disaster response', phone:'143', website:'https://redcross.org.ph', hotline:true, verified:true, note:'Philippine Red Cross national hotline.' },
     { name:'ISUFST-SEC University Student Council', role:'University Student Council', verified:true, phone:'09128510559', website:'https://www.facebook.com/profile.php?id=100063958571487', note:'Email listed ' },
-    { name:'Campus Security', role:'On-campus security', verified:true, phone:'09128510559', note:'PLACEHOLDER. Number not yet confirmed by the school.' },
+    { name:'Campus Security', role:'On-campus security', verified:true, phone:'09703624301', note:'PLACEHOLDER. Number not yet confirmed by the school.' },
     { name:'Campus Clinic', role:'First aid and medical support', verified:false, note:'PLACEHOLDER. Number not yet confirmed by the school.' },
     { name:'Bureau of Fire Protection, San Enrique', role:'Local fire station', hotline:true, loc:{ url:'https://maps.app.goo.gl/X1t1N9BbaWQTjbT36' }, verified:true, website:'https://www.facebook.com/profile.php?id=100089587843340', phone:'09076951603' },
     { name:'Philippine National Police, San Enrique', role:'Local police station', hotline:true, loc:{ url:'https://maps.app.goo.gl/yChZ2kqL32fAWA9E8' }, verified:true, website:'https://www.facebook.com/sanenriquepcr', phone:'09985986228' },
