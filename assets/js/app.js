@@ -527,5 +527,31 @@ document.addEventListener('change', async e => {
 document.addEventListener('click', e => { const b = e.target.closest('#toggleAll'); if (!b) return; const open = b.dataset.open !== '1'; $$('#guideList .guide').forEach(g => g.open = open); b.dataset.open = open ? '1' : '0'; b.textContent = open ? 'Collapse all' : 'Expand all'; });
 addEventListener('keydown', e => { if (e.key === 'Escape') root.classList.remove('side-open'); });
 $$('.toast').forEach(t => t.remove());
+
+// Log contacts you tapped (shows the number or email) in Notifications
+document.addEventListener('click', e => {
+  const u = S.auth.current(); if (!u) return;
+  const a = e.target.closest('.contact a, .detail-actions a[href^="mailto:"]'); if (!a) return;
+  const href = a.getAttribute('href') || '', when = fmt(new Date().toISOString());
+  const isTel = href.startsWith('tel:'), isMail = href.startsWith('mailto:'), isMsg = /Messenger/.test(a.textContent);
+  if (!isTel && !isMail && !isMsg) return;
+  let title, msg, link = '#/contacts';
+  if (a.closest('.detail-actions')) {
+    const to = decodeURIComponent(href.slice(7).split('?')[0]);
+    title = 'Contacted: ' + to;
+    msg = 'You emailed ' + to + ' about "' + (document.querySelector('.detail h2')?.textContent || 'a report') + '" on ' + when + '.';
+    link = location.hash;
+  } else {
+    const card = a.closest('.contact'), name = card.querySelector('h2').textContent;
+    const shown = card.querySelector('dd a[href="' + href + '"]')?.textContent;
+    const target = isTel ? (shown || decodeURIComponent(href.slice(4)))
+      : isMail ? (shown || decodeURIComponent(href.slice(7).split('?')[0])) : 'Messenger';
+    title = 'Contacted: ' + target;
+    msg = (isTel ? 'You called ' : isMail ? 'You emailed ' : 'You messaged ') + name + ' (' + target + ') on ' + when + '.';
+  }
+  try { S.notes.add(u.id, title, msg, 'info', link); } catch (x) { return; }
+  const n = S.notes.unread(u.id), c = $('#navCount'), d = $('#bell .dot');
+  if (c) { c.hidden = !n; c.textContent = n; } if (d) d.hidden = !n;
+});
 route();
 })();
