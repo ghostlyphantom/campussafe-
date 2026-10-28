@@ -196,7 +196,7 @@ views.report = (p, q, u) => {
   pending = { photo: undefined };
   return { title: row ? 'Edit report' : 'Report incident', active: 'report', html: `
   ${sos('Is someone in danger right now? Call emergency responders before filling in this form.')}
-  ${row ? '' : note('How reports are received.', 'After you submit, press Send to campus office to email the report to ' + esc(D.REPORT_EMAIL) + '. Until then it is saved only on this device.')}
+  ${row ? '' : note('How reports are received.', 'After you submit, press Send Report to Email the report to ' + esc(D.REPORT_EMAIL) + '. Until then it is saved only on this device.')}
   <div id="formErr" hidden></div>
   <form class="card form-card" data-form="report" data-id="${row ? row.id : ''}" novalidate>
     <div class="form-grid">
