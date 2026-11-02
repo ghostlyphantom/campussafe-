@@ -159,7 +159,7 @@ const views = {};
 /* ---------- dashboard ---------- */
 views.dashboard = (p, q, u) => {
   const all = S.reports.all(), mine = all.filter(r => r.uid === u.id);
-  const stats = [['My reports', mine.length, 'filePlus', '#/incidents?scope=mine'], ['Open Saved Reports', all.filter(r => r.status !== 'resolved').length, 'alert', '#/incidents?status=reported'], ['Already Sent Reports', all.filter(r => r.status === 'resolved').length, 'check', '#/incidents?status=resolved'], ['Map markers', S.markers.all(u.id).length, 'pin', '#/map']];
+  const stats = [['My reports', mine.length, 'filePlus', '#/incidents?scope=mine'], ['Mark as Saved', all.filter(r => r.status !== 'resolved').length, 'alert', '#/incidents?status=reported'], ['Mark as Reported', all.filter(r => r.status === 'resolved').length, 'check', '#/incidents?status=resolved'], ['Map markers', S.markers.all(u.id).length, 'pin', '#/map']];
   const cnt = {}; all.forEach(r => cnt[r.category] = (cnt[r.category] || 0) + 1);
   const cats = Object.entries(cnt).sort((a, b) => b[1] - a[1]), max = Math.max(1, ...cats.map(c => c[1]));
   const notes = S.notes.list(u.id).filter(n => n.unread).slice(0, 4);
@@ -254,7 +254,7 @@ views.incident = (p, q, u) => {
     <dl class="facts"><div><dt>Location</dt><dd>${esc(r.location)}</dd></div><div><dt>Reported by</dt><dd>${esc(S.auth.name(r.uid))}</dd></div><div><dt>Reported</dt><dd>${fmt(r.created)}</dd></div><div><dt>Last update</dt><dd>${fmt(r.updated)}</dd></div></dl>
     <h3>Description</h3><p class="prose">${nl2br(r.description)}</p>
     ${safeImg(r.photo) ? `<h3>Photo</h3><img class="photo" src="${safeImg(r.photo)}" alt="Photo attached to the report">` : ''}
-    ${mine && r.status !== 'resolved' ? `<div class="notice send-note">${ic('mail')}<div><b>Send this report to the campus office.</b> It is saved only on this device until you email it. Press the button, then press send in your email app.${r.photo ? ' Attach the photo yourself.' : ''}</div></div>` : ''}
+    ${mine && r.status !== 'resolved' ? `<div class="notice send-note">${ic('mail')}<div><b>Send this report to the auhorized person's email.</b> It is saved only on this device until you email it. Press the button, then press send in your email app.${r.photo ? ' Attach the photo yourself.' : ''}</div></div>` : ''}
     <div class="detail-actions">
       ${mine && r.status !== 'resolved' ? `<a class="btn btn-primary" href="${esc(reportMail(r))}">${ic('mail')} Send Report to Email</a>` : ''}
       ${hasLoc ? `<a class="btn btn-navy" href="#/map?incident=${r.id}">${ic('map')} View on campus map</a><a class="btn btn-ghost" target="_blank" rel="noopener" href="${osm(r.lat, r.lng, 18)}">${ic('external')} OpenStreetMap</a>` : ''}
@@ -503,7 +503,7 @@ document.addEventListener('click', e => {
   else if (a === 'peek') { const i = t.parentElement.querySelector('input'), s = i.type === 'password'; i.type = s ? 'text' : 'password'; t.setAttribute('aria-label', s ? 'Hide password' : 'Show password'); }
   else if (a === 'export' && u) exportCsv(u);
   else if (a === 'mark-read' && u) { S.notes.markAllRead(u.id); toast('All notifications marked as read.'); route(); }
-  else if (a === 'resolve' && u) { try { S.reports.update(t.dataset.id, u.id, { status: 'resolved' }); toast('Marked as resolved.'); route(); } catch (x) { toast(x.message, 'error'); } }
+  else if (a === 'resolve' && u) { try { S.reports.update(t.dataset.id, u.id, { status: 'resolved' }); toast('Marked as reported.'); route(); } catch (x) { toast(x.message, 'error'); } }
   else if (a === 'delete-report' && u) { if (!confirm('Delete this report? This cannot be undone.')) return; try { S.reports.remove(t.dataset.id, u.id); toast('Report deleted.'); go('incidents?scope=mine'); } catch (x) { toast(x.message, 'error'); } }
 });
 document.addEventListener('submit', e => {
